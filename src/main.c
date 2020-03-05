@@ -897,6 +897,10 @@ int main(int argc, char *argv[])
     printf("             |_|         https://mupen64plus.org/               \n");
     printf("%s Version %i.%i.%i\n\n", CONSOLE_UI_NAME, VERSION_PRINTF_SPLIT(CONSOLE_UI_VERSION));
 
+    #ifdef EMSCRIPTEN
+        setenv("HOME", "/", 1);
+    #endif
+
     /* bootstrap some special parameters from the command line */
     if (ParseCommandLineInitial(argc, (const char **) argv) != 0)
         return 1;
@@ -906,7 +910,7 @@ int main(int argc, char *argv[])
         return 2;
 
     /* start the Mupen64Plus core library, load the configuration file */
-    m64p_error rval = (*CoreStartup)(CORE_API_VERSION, l_ConfigDirPath, l_DataDirPath, "Core", DebugCallback, NULL, CALLBACK_FUNC);
+    m64p_error rval = CoreStartup(CORE_API_VERSION, l_ConfigDirPath, l_DataDirPath, "Core", DebugCallback, NULL, NULL);
     if (rval != M64ERR_SUCCESS)
     {
         DebugMessage(M64MSG_ERROR, "couldn't start Mupen64Plus core library.");

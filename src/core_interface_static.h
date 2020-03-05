@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *   Mupen64plus - main.h                                                  *
- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
- *   Copyright (C) 2009 Richard42                                          *
+ *   Mupen64plus-ui-console - core_interface.h                             *
+ *   Mupen64Plus homepage: http://code.google.com/p/mupen64plus/           *
+ *   Copyright (C) 2014 Jeffrey Quesnelle                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,19 +19,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef _CORE_INTERFACE_STATIC_H
+#define _CORE_INTERFACE_STATIC_H
 
-#if defined(__GNUC__)
-#define ATTR_FMT(fmtpos, attrpos) __attribute__ ((format (printf, fmtpos, attrpos)))
-#else
-#define ATTR_FMT(fmtpos, attrpos)
-#endif
+#define M64P_CORE_PROTOTYPES 1
+#include "m64p_common.h"
+#include "m64p_frontend.h"
+#include "m64p_config.h"
+#include "m64p_debugger.h"
 
-void DebugMessage(int level, const char *message, ...) ATTR_FMT(2,3);
-void DebugCallback(void *Context, int level, const char *message);
+/* function declarations */
+extern m64p_error AttachCoreLib(const char *CoreLibFilepath);
+extern m64p_error DetachCoreLib(void);
 
-extern int  g_Verbose;
+/* global variables from core_interface.c */
+extern int g_CoreCapabilities;
+extern int g_CoreAPIVersion;
 
-#endif /* __MAIN_H__ */
+/* declarations of Core library handle and pointers to common functions */
+extern m64p_dynlib_handle      CoreHandle;
 
+#endif 

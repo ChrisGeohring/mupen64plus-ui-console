@@ -22,6 +22,10 @@
 #if !defined(CORE_INTERFACE_H)
 #define CORE_INTERFACE_H
 
+#ifdef M64P_STATIC_PLUGINS
+#include "core_interface_static.h"
+#else
+
 #include "m64p_common.h"
 #include "m64p_config.h"
 #include "m64p_debugger.h"
@@ -110,3 +114,4 @@ extern ptr_DebugVirtualToPhysical     DebugVirtualToPhysical;
 
 #endif /* #define CORE_INTERFACE_H */
 
+#endif /* UI_CONSOLE_STATIC */ 
